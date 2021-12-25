@@ -46,9 +46,7 @@ public class MainActivity extends Activity {
         mFalseButton = (Button) findViewById(R.id.false_button);
         mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
 
-        TrueFalse firstQuestion = mQuestionBank[mIndex];
-
-        int question = firstQuestion.getQuestionID();
+        mQuestion = mQuestionBank[mIndex].getQuestionID();
 
         mQuestionTextView.setText(mQuestion);
 
@@ -69,8 +67,21 @@ public class MainActivity extends Activity {
     }
 
     private void updateQuestion() {
-        mIndex = (mIndex + 1);
+        mIndex = (mIndex + 1) % mQuestionBank.length;
         mQuestion = mQuestionBank[mIndex].getQuestionID();
         mQuestionTextView.setText(mQuestion);
     }
+
+    private void checkAnswer(boolean userSelection) {
+
+        boolean correctAnswer = mQuestionBank[mIndex].isAnswer();
+
+        if(userSelection == correctAnswer) {
+            Toast.makeText(getApplicationContext(), R.string.correct_toast, Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getApplicationContext(), R.string.incorrect_toast, Toast.LENGTH_SHORT).show();
+        }
+    }
 }
+
+
